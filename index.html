@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFest 2026 - Technology & Innovation Festival</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+
+        .hero .date {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #667eea;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #764ba2;
+        }
+
+        /* Speakers Section */
+        .speakers {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .speaker-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .speaker-card:hover {
+            transform: scale(1.05);
+        }
+
+        .speaker-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+        }
+
+        .speaker-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .speaker-title {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Registration Section */
+        .registration {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .registration-form {
+            max-width: 500px;
+            margin: 40px auto 0;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: #ff6b6b;
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-button:hover {
+            background: #ff5252;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #4caf50;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto 0;
+        }
+
+        .success-message h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+
+            .features-grid,
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>TechFest 2026</h1>
+            <p class="subtitle">Latin America's Largest Technology & Innovation Festival</p>
+            <p class="date">📅 June 15-17, 2026 | 📍 Guadalajara, Mexico</p>
+            <button class="cta-button" onclick="scrollToRegistration()">Register Now!</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Attend?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎤</div>
+                    <h3>International Speakers</h3>
+                    <p>Meet the most influential leaders in the tech industry and learn from their experiences.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Hands-on Workshops</h3>
+                    <p>Over 30 practical workshops on AI, blockchain, web development and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Networking</h3>
+                    <p>Connect with over 5,000 professionals, entrepreneurs and innovators.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Startup Pitch</h3>
+                    <p>Startup competition with prizes up to $50,000 USD.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Tech Expo</h3>
+                    <p>Exhibition of the latest technologies and innovative products.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎉</div>
+                    <h3>After Party</h3>
+                    <p>Exclusive social events for all attendees.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speakers Section -->
+    <section class="speakers">
+        <div class="container">
+            <h2 class="section-title">Featured Speakers</h2>
+            <div class="speakers-grid">
+                <div class="speaker-card">
+                    <div class="speaker-avatar">👨‍💻</div>
+                    <div class="speaker-name">Carlos Mendez</div>
+                    <div class="speaker-title">CEO of TechStartup Inc.</div>
+                </div>
+                <div class="speaker-card">
+                    <div class="speaker-avatar">👩‍💼</div>
+                    <div class="speaker-name">Ana Rodriguez</div>
+                    <div class="speaker-title">Lead AI Researcher, Google</div>
+                </div>
+                <div class="speaker-card">
+                    <div class="speaker-avatar">👨‍🔬</div>
+                    <div class="speaker-name">Miguel Torres</div>
+                    <div class="speaker-title">Blockchain Evangelist</div>
+                </div>
+                <div class="speaker-card">
+                    <div class="speaker-avatar">👩‍🎨</div>
+                    <div class="speaker-name">Laura Sanchez</div>
+                    <div class="speaker-title">Head of Design, Meta</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section class="registration" id="registro">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Secure Your Spot!</h2>
+            <p style="font-size: 1.2em; margin-bottom: 20px;">Limited spaces - Early Bird until March 31st</p>
+            
+            <form class="registration-form" id="registrationForm">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone *</label>
+                    <input type="tel" id="phone" required placeholder="+1 123 456 7890">
+                </div>
+                <div class="form-group">
+                    <label for="ticket">Ticket Type *</label>
+                    <select id="ticket" required>
+                        <option value="">Select an option</option>
+                        <option value="early">Early Bird - $99 USD</option>
+                        <option value="general">General - $149 USD</option>
+                        <option value="vip">VIP - $249 USD</option>
+                        <option value="student">Student - $49 USD</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-button">Complete Registration</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <h3>🎉 Registration Successful!</h3>
+                <p>We've sent you a confirmation email with all the details.</p>
+                <p><strong>See you at TechFest 2026!</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 TechFest. Todos los derechos reservados.</p>
+        <p>📧 info@techfest.com | 📱 +52 33 1234 5678</p>
+    </footer>
+
+    <script>
+        function scrollToRegistration() {
+            document.getElementById('registro').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const form = this;
+            const successMessage = document.getElementById('successMessage');
+            
+            // Hide form and show success message
+            form.style.display = 'none';
+            successMessage.classList.add('show');
+            
+            // Track conversion (you could send this to analytics)
+            console.log('Conversion registered:', {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                ticket: document.getElementById('ticket').value
+            });
+        });
+    </script>
+</body>
+</html>

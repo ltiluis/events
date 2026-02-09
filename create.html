@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Event - Event Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: -50px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            font-size: 1.8em;
+            color: #667eea;
+            margin: 40px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section-header:first-child {
+            margin-top: 0;
+        }
+
+        /* Form Groups */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group input[type="color"] {
+            height: 60px;
+            cursor: pointer;
+        }
+
+        /* Color Picker Helper */
+        .color-preview {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .color-preview input[type="color"] {
+            width: 80px;
+        }
+
+        .color-preview span {
+            font-family: monospace;
+            color: #666;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Preview Button */
+        .preview-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .preview-btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Helper Text */
+        .helper-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Success Message */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-content {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        .success-content h2 {
+            color: #4caf50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .success-content p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            background: #4caf50;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .form-card {
+                padding: 30px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .success-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🎉 Create Your Event</h1>
+        <p>Build a professional event landing page in minutes</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="form-card">
+            <form id="eventForm">
+                <!-- Event Basic Info -->
+                <h2 class="section-header">📋 Event Details</h2>
+                
+                <div class="form-group">
+                    <label for="eventName">Event Name *</label>
+                    <input type="text" id="eventName" required placeholder="e.g., TechFest 2026">
+                </div>
+
+                <div class="form-group">
+                    <label for="eventTagline">Event Tagline *</label>
+                    <input type="text" id="eventTagline" required placeholder="e.g., The Future of Technology">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventDate">Event Date *</label>
+                        <input type="text" id="eventDate" required placeholder="e.g., June 15-17, 2026">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventLocation">Location *</label>
+                        <input type="text" id="eventLocation" required placeholder="e.g., San Francisco, CA">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventDescription">Event Description *</label>
+                    <textarea id="eventDescription" required placeholder="Tell people what makes your event special..."></textarea>
+                </div>
+
+                <!-- Branding -->
+                <h2 class="section-header">🎨 Branding</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="primaryColor">Primary Color</label>
+                        <div class="color-preview">
+                            <input type="color" id="primaryColor" value="#667eea">
+                            <span id="primaryColorText">#667eea</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="secondaryColor">Secondary Color</label>
+                        <div class="color-preview">
+                            <input type="color" id="secondaryColor" value="#764ba2">
+                            <span id="secondaryColorText">#764ba2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <h2 class="section-header">📞 Contact Information</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactEmail">Contact Email *</label>
+                        <input type="email" id="contactEmail" required placeholder="info@yourevent.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactPhone">Contact Phone</label>
+                        <input type="tel" id="contactPhone" placeholder="+1 123 456 7890">
+                    </div>
+                </div>
+
+                <!-- Ticket Info -->
+                <h2 class="section-header">🎫 Ticket Options</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="earlyBirdPrice">Early Bird Price</label>
+                        <input type="text" id="earlyBirdPrice" placeholder="$99">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="generalPrice">General Price</label>
+                        <input type="text" id="generalPrice" placeholder="$149">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vipPrice">VIP Price</label>
+                        <input type="text" id="vipPrice" placeholder="$249">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentPrice">Student Price</label>
+                        <input type="text" id="studentPrice" placeholder="$49">
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">
+                        ← Back to Demo
+                    </button>
+                    <button type="button" class="btn btn-primary preview-btn" onclick="previewEvent()">
+                        👁️ Preview
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        🚀 Generate Landing Page
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-content">
+            <h2>🎉 Success!</h2>
+            <p>Your event landing page has been generated!</p>
+            <button class="download-btn" onclick="downloadPage()">📥 Download HTML</button>
+            <br><br>
+            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="closeSuccess()">Create Another</button>
+        </div>
+    </div>
+
+    <script>
+        // Color picker updates
+        document.getElementById('primaryColor').addEventListener('input', function(e) {
+            document.getElementById('primaryColorText').textContent = e.target.value;
+        });
+
+        document.getElementById('secondaryColor').addEventListener('input', function(e) {
+            document.getElementById('secondaryColorText').textContent = e.target.value;
+        });
+
+        // Form submission
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateLandingPage();
+        });
+
+        function generateLandingPage() {
+            // Get form data
+            const formData = {
+                name: document.getElementById('eventName').value,
+                tagline: document.getElementById('eventTagline').value,
+                date: document.getElementById('eventDate').value,
+                location: document.getElementById('eventLocation').value,
+                description: document.getElementById('eventDescription').value,
+                primaryColor: document.getElementById('primaryColor').value,
+                secondaryColor: document.getElementById('secondaryColor').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value || '+1 123 456 7890',
+                earlyBird: document.getElementById('earlyBirdPrice').value || '$99',
+                general: document.getElementById('generalPrice').value || '$149',
+                vip: document.getElementById('vipPrice').value || '$249',
+                student: document.getElementById('studentPrice').value || '$49'
+            };
+
+            // Store data for download
+            window.generatedEventData = formData;
+
+            // Show success message
+            document.getElementById('successOverlay').classList.add('show');
+        }
+
+        function previewEvent() {
+            alert('Preview feature coming soon! For now, click "Generate Landing Page" to create your event page.');
+        }
+
+        function downloadPage() {
+            const data = window.generatedEventData;
+            
+            // Generate HTML with user's data
+            const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${data.name}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero {
+            background: linear-gradient(135deg, ${data.primaryColor} 0%, ${data.secondaryColor} 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 3.5em; margin-bottom: 20px; }
+        .hero p { font-size: 1.5em; margin-bottom: 30px; }
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .content {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>${data.name}</h1>
+        <p>${data.tagline}</p>
+        <p>📅 ${data.date} | 📍 ${data.location}</p>
+        <button class="cta-button">Register Now!</button>
+    </div>
+    <div class="content">
+        <h2>About the Event</h2>
+        <p>${data.description}</p>
+        <h3 style="margin-top: 40px;">Ticket Prices</h3>
+        <p>Early Bird: ${data.earlyBird} | General: ${data.general} | VIP: ${data.vip} | Student: ${data.student}</p>
+    </div>
+    <footer>
+        <p>📧 ${data.email} | 📱 ${data.phone}</p>
+    </footer>
+</body>
+</html>`;
+
+            // Create download
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = data.name.toLowerCase().replace(/\s+/g, '-') + '.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function closeSuccess() {
+            document.getElementById('successOverlay').classList.remove('show');
+            document.getElementById('eventForm').reset();
+        }
+    </script>
+</body>
+</html>
